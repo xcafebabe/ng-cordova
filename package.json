@@ -4,7 +4,7 @@
   "main": "dist/ng-cordova",
   "version": "0.1.27-alpha",
   "repository": {
-    "url": "git://github.com/xcafebabe/ng-cordova.git"
+    "url": "git://github.com/driftyco/ng-cordova.git"
   },
   "devDependencies": {
     "gulp": "^3.7.0",
