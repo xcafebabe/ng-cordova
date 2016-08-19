@@ -1,7 +1,7 @@
 /*!
  * ngCordova
  * v0.1.27-alpha
- * Copyright 2015 Drifty Co. http://drifty.com/
+ * Copyright 2016 Drifty Co. http://drifty.com/
  * See LICENSE in this repository for license information
  */
 (function(){
