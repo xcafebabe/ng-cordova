@@ -4,12 +4,12 @@ describe('Service: $cordovaGoogleAnalytics', function() {
 
   beforeEach(module('ngCordova.plugins.googleAnalytics'));
 
-  beforeEach(inject(function (_$cordovaGoogleAnalytics_, _$window_, _$rootScope_) {
+  beforeEach(inject(function(_$cordovaGoogleAnalytics_, _$window_, _$rootScope_) {
     $cordovaGoogleAnalytics = _$cordovaGoogleAnalytics_;
     $window = _$window_;
     $rootScope = _$rootScope_;
 
-    $window.analytics = {
+    $window.ga = {
       startTrackerWithId: angular.noop,
       setUserId: angular.noop,
       debugMode: angular.noop,
@@ -27,34 +27,34 @@ describe('Service: $cordovaGoogleAnalytics', function() {
 
     var result;
 
-    spyOn($window.analytics, 'startTrackerWithId')
-      .and.callFake(function (id, successCb, errorCb) {
+    spyOn($window.ga, 'startTrackerWithId')
+      .and.callFake(function(id, successCb, errorCb) {
         successCb('tracker started');
       });
 
     $cordovaGoogleAnalytics
       .startTrackerWithId('UA-000000-01')
-      .then(function (response) {
+      .then(function(response) {
         result = response;
       });
 
     $rootScope.$digest();
 
     expect(result).toBe('tracker started');
-    expect($window.analytics.startTrackerWithId.calls.argsFor(0)[0]).toBe('UA-000000-01');
+    expect($window.ga.startTrackerWithId.calls.argsFor(0)[0]).toBe('UA-000000-01');
   });
 
   it('should call errorCb when in $window\'s analytics.startTrackerWithId a error orccurs', function() {
 
     var result;
 
-    spyOn($window.analytics, 'startTrackerWithId')
-      .and.callFake(function (id, successCb, errorCb) {
+    spyOn($window.ga, 'startTrackerWithId')
+      .and.callFake(function(id, successCb, errorCb) {
         errorCb('tracker id is not valid');
       });
 
     $cordovaGoogleAnalytics.startTrackerWithId()
-      .then(angular.noop, function (response) {
+      .then(angular.noop, function(response) {
         result = response;
       });
 
@@ -67,34 +67,34 @@ describe('Service: $cordovaGoogleAnalytics', function() {
 
     var result;
 
-    spyOn($window.analytics, 'setUserId')
-      .and.callFake(function (id, successCb, errorCb) {
+    spyOn($window.ga, 'setUserId')
+      .and.callFake(function(id, successCb, errorCb) {
         successCb('Set user id: ' + id);
       });
 
     $cordovaGoogleAnalytics
       .setUserId('USER_ID')
-      .then(function (response) {
+      .then(function(response) {
         result = response;
       });
 
     $rootScope.$digest();
 
     expect(result).toBe('Set user id: USER_ID');
-    expect($window.analytics.setUserId.calls.argsFor(0)[0]).toBe('USER_ID');
+    expect($window.ga.setUserId.calls.argsFor(0)[0]).toBe('USER_ID');
   });
 
   it('should call errorCb when in $window\'s analytics.setUserId a error orccurs', function() {
 
     var result;
 
-    spyOn($window.analytics, 'setUserId')
-      .and.callFake(function (id, successCb, errorCb) {
+    spyOn($window.ga, 'setUserId')
+      .and.callFake(function(id, successCb, errorCb) {
         errorCb('Tracker not started');
       });
 
     $cordovaGoogleAnalytics.setUserId()
-      .then(angular.noop, function (response) {
+      .then(angular.noop, function(response) {
         result = response;
       });
 
@@ -107,14 +107,14 @@ describe('Service: $cordovaGoogleAnalytics', function() {
 
     var result;
 
-    spyOn($window.analytics, 'debugMode')
-      .and.callFake(function (successCb, errorCb) {
+    spyOn($window.ga, 'debugMode')
+      .and.callFake(function(successCb, errorCb) {
         successCb('debugMode enabled');
       });
 
     $cordovaGoogleAnalytics
       .debugMode()
-      .then(function (response) {
+      .then(function(response) {
         result = response;
       });
 
@@ -127,13 +127,13 @@ describe('Service: $cordovaGoogleAnalytics', function() {
 
     var result;
 
-    spyOn($window.analytics, 'debugMode')
-      .and.callFake(function (successCb, errorCb) {
+    spyOn($window.ga, 'debugMode')
+      .and.callFake(function(successCb, errorCb) {
         errorCb();
       });
 
     $cordovaGoogleAnalytics.debugMode()
-      .then(angular.noop, function (response) {
+      .then(angular.noop, function(response) {
         result = 'error orccurs';
       });
 
@@ -147,13 +147,13 @@ describe('Service: $cordovaGoogleAnalytics', function() {
     var result;
 
     spyOn($window.analytics, 'trackView')
-      .and.callFake(function (screenName, successCb, errorCb) {
+      .and.callFake(function(screenName, successCb, errorCb) {
         successCb('Track Screen: ' + screenName);
       });
 
     $cordovaGoogleAnalytics
       .trackView('Home Screen')
-      .then(function (response) {
+      .then(function(response) {
         result = response;
       });
 
@@ -168,12 +168,12 @@ describe('Service: $cordovaGoogleAnalytics', function() {
     var result;
 
     spyOn($window.analytics, 'trackView')
-      .and.callFake(function (screenName, successCb, errorCb) {
+      .and.callFake(function(screenName, successCb, errorCb) {
         errorCb('Expected one non-empty string argument');
       });
 
     $cordovaGoogleAnalytics.trackView()
-      .then(angular.noop, function (response) {
+      .then(angular.noop, function(response) {
         result = response;
       });
 
@@ -187,13 +187,13 @@ describe('Service: $cordovaGoogleAnalytics', function() {
     var result;
 
     spyOn($window.analytics, 'addCustomDimension')
-      .and.callFake(function (key, value, successCb, errorCb) {
+      .and.callFake(function(key, value, successCb, errorCb) {
         successCb();
       });
 
     $cordovaGoogleAnalytics
       .addCustomDimension(1, 'Level 1')
-      .then(function (response) {
+      .then(function(response) {
         result = 'success';
       });
 
@@ -209,12 +209,12 @@ describe('Service: $cordovaGoogleAnalytics', function() {
     var result;
 
     spyOn($window.analytics, 'addCustomDimension')
-      .and.callFake(function (key, value, successCb, errorCb) {
+      .and.callFake(function(key, value, successCb, errorCb) {
         errorCb('Parameter "key" must be an integer.');
       });
 
     $cordovaGoogleAnalytics.addCustomDimension()
-      .then(angular.noop, function (response) {
+      .then(angular.noop, function(response) {
         result = response;
       });
 
@@ -228,13 +228,13 @@ describe('Service: $cordovaGoogleAnalytics', function() {
     var result;
 
     spyOn($window.analytics, 'trackEvent')
-      .and.callFake(function (category, action, label, value, successCb, errorCb) {
+      .and.callFake(function(category, action, label, value, successCb, errorCb) {
         successCb('Track Event: ' + category);
       });
 
     $cordovaGoogleAnalytics
       .trackEvent('Videos', 'Video Load Time', 'Gone With the Wind', 100)
-      .then(function (response) {
+      .then(function(response) {
         result = response;
       });
 
@@ -253,13 +253,13 @@ describe('Service: $cordovaGoogleAnalytics', function() {
     var result;
 
     spyOn($window.analytics, 'trackEvent')
-      .and.callFake(function (category, action, label, value, successCb, errorCb) {
+      .and.callFake(function(category, action, label, value, successCb, errorCb) {
         errorCb('Tracker not started');
       });
 
     $cordovaGoogleAnalytics
       .trackEvent()
-      .then(angular.noop, function (response) {
+      .then(angular.noop, function(response) {
         result = response;
       });
 
@@ -273,13 +273,13 @@ describe('Service: $cordovaGoogleAnalytics', function() {
     var result;
 
     spyOn($window.analytics, 'trackException')
-      .and.callFake(function (description, fatal, successCb, errorCb) {
+      .and.callFake(function(description, fatal, successCb, errorCb) {
         successCb('Track Exception: ' + description);
       });
 
     $cordovaGoogleAnalytics
       .trackException('Video player exception', false)
-      .then(function (response) {
+      .then(function(response) {
         result = response;
       });
 
@@ -298,13 +298,13 @@ describe('Service: $cordovaGoogleAnalytics', function() {
     var result;
 
     spyOn($window.analytics, 'trackException')
-      .and.callFake(function (description, fatal, successCb, errorCb) {
+      .and.callFake(function(description, fatal, successCb, errorCb) {
         errorCb('Tracker not started');
       });
 
     $cordovaGoogleAnalytics
       .trackException()
-      .then(angular.noop, function (response) {
+      .then(angular.noop, function(response) {
         result = response;
       });
 
@@ -318,13 +318,13 @@ describe('Service: $cordovaGoogleAnalytics', function() {
     var result;
 
     spyOn($window.analytics, 'trackTiming')
-      .and.callFake(function (category, milliseconds, variable, label, successCb, errorCb) {
+      .and.callFake(function(category, milliseconds, variable, label, successCb, errorCb) {
         successCb('Track Timing: ' + category);
       });
 
     $cordovaGoogleAnalytics
       .trackTiming('Videos', 100, 'Video Load Time', 'Gone With the Wind')
-      .then(function (response) {
+      .then(function(response) {
         result = response;
       });
 
@@ -343,13 +343,13 @@ describe('Service: $cordovaGoogleAnalytics', function() {
     var result;
 
     spyOn($window.analytics, 'trackTiming')
-      .and.callFake(function (category, milliseconds, variable, label, successCb, errorCb) {
+      .and.callFake(function(category, milliseconds, variable, label, successCb, errorCb) {
         errorCb('Tracker not started');
       });
 
     $cordovaGoogleAnalytics
       .trackTiming()
-      .then(angular.noop, function (response) {
+      .then(angular.noop, function(response) {
         result = response;
       });
 
@@ -363,13 +363,13 @@ describe('Service: $cordovaGoogleAnalytics', function() {
     var result;
 
     spyOn($window.analytics, 'addTransaction')
-      .and.callFake(function (transactionId, affiliation, revenue, tax, shipping, currencyCode, successCb, errorCb) {
+      .and.callFake(function(transactionId, affiliation, revenue, tax, shipping, currencyCode, successCb, errorCb) {
         successCb('Add Transaction: ' + transactionId);
       });
 
     $cordovaGoogleAnalytics
       .addTransaction('1234', 'Acme Clothing', '11.99', '5', '1.29', 'EUR')
-      .then(function (response) {
+      .then(function(response) {
         result = response;
       });
 
@@ -388,12 +388,12 @@ describe('Service: $cordovaGoogleAnalytics', function() {
     var result;
 
     spyOn($window.analytics, 'addTransaction')
-      .and.callFake(function (transactionId, affiliation, revenue, tax, shipping, currencyCode, successCb, errorCb) {
+      .and.callFake(function(transactionId, affiliation, revenue, tax, shipping, currencyCode, successCb, errorCb) {
         errorCb('Tracker not started');
       });
 
     $cordovaGoogleAnalytics.addTransaction()
-      .then(angular.noop, function (response) {
+      .then(angular.noop, function(response) {
         result = response;
       });
 
@@ -407,13 +407,13 @@ describe('Service: $cordovaGoogleAnalytics', function() {
     var result;
 
     spyOn($window.analytics, 'addTransactionItem')
-      .and.callFake(function (transactionId, name ,sku, category, price, quantity, currencyCode, successCb, errorCb) {
+      .and.callFake(function(transactionId, name, sku, category, price, quantity, currencyCode, successCb, errorCb) {
         successCb('Add Transaction Item: ' + transactionId);
       });
 
     $cordovaGoogleAnalytics
       .addTransactionItem('1234', 'Fluffy Pink Bunnies', 'DD23444', 'Party Toys', '11.99', '1', 'GBP')
-      .then(function (response) {
+      .then(function(response) {
         result = response;
       });
 
@@ -432,12 +432,12 @@ describe('Service: $cordovaGoogleAnalytics', function() {
     var result;
 
     spyOn($window.analytics, 'addTransactionItem')
-      .and.callFake(function (transactionId, name ,sku, category, price, quantity, currencyCode, successCb, errorCb) {
+      .and.callFake(function(transactionId, name, sku, category, price, quantity, currencyCode, successCb, errorCb) {
         errorCb('Tracker not started');
       });
 
     $cordovaGoogleAnalytics.addTransactionItem()
-      .then(angular.noop, function (response) {
+      .then(angular.noop, function(response) {
         result = response;
       });
 
