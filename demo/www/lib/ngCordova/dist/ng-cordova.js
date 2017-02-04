@@ -3951,10 +3951,10 @@ angular.module('ngCordova.plugins.googleAnalytics', [])
       return d.promise;
     },
 
-    trackEvent: function(category, action, label, value) {
+    trackEvent: function(category, action, label, value, newSession) {
       var d = $q.defer();
 
-      $window.ga.trackEvent(category, action, label, value, function(response) {
+      $window.ga.trackEvent(category, action, label, value, !!(newSession), function(response) {
         d.resolve(response);
       }, function(error) {
         d.reject(error);

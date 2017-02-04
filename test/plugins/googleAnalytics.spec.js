@@ -228,7 +228,7 @@ describe('Service: $cordovaGoogleAnalytics', function() {
     var result;
 
     spyOn($window.analytics, 'trackEvent')
-      .and.callFake(function(category, action, label, value, successCb, errorCb) {
+      .and.callFake(function(category, action, label, value, newSession, successCb, errorCb) {
         successCb('Track Event: ' + category);
       });
 
